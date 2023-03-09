@@ -31,9 +31,9 @@
 
     - name: save keys to this machine
       copy:
-        content: "{{ keyResult.key.private_key }}"
-        dest: "~root/.ssh/HomeWork13Key"
-        mode: 0600
+      content: "{{ keyResult.key.private_key }}"
+      dest: ".ssh/id_rsa"
+      mode: 0600
       when: keyResult.changed
 
 - name: create aws "build" instance
