@@ -70,7 +70,8 @@
 
 - name: add build instance to build group in ansible
   hosts: localhost
-  user: root
+  become: yes
+
   tasks:
     add_host:
       hostname: "{{ build.instances[0].public_ip_address }}"
@@ -78,7 +79,8 @@
 
 - name: add prod instance to prod group in ansible
   hosts: localhost
-  user: root
+  become: yes
+
   tasks:
     add_host:
       hostname: "{{ prod.instances[0].public_ip_address }}"
