@@ -35,7 +35,7 @@
         content: "{{ key_result.key.private_key }}"
         dest: "/root/.ssh/homework13key"
         mode: 0600
-        when: key_result.changed
+      when: key_result.changed
 
 - name: create aws "build" instance
   hosts: localhost
