@@ -27,14 +27,14 @@
       ec2_key:
         name: HomeWork13Key
         region: us-east-1
-      register: key-result
+      register: keyResult
 
     - name: save keys to this machine
       copy:
-        content: "{{ key-result.key.private_key }}"
+        content: "{{ keyResult.key.private_key }}"
         dest: "~root/.ssh/HomeWork13Key"
         mode: 0400
-        when: key-result.changed
+        when: keyResult.changed
 
 - name: create aws "build" instance
   hosts: localhost
