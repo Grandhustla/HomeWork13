@@ -1,7 +1,8 @@
 ---
 - name: create aws security group, key-pair, save keys
   hosts: localhost
-  user: root
+  become: yes
+
   tasks:
     - name: create security group
       ec2_group:
@@ -37,33 +38,35 @@
 
 - name: create aws "build" instance
   hosts: localhost
-  user: root
+  become: yes
+
   tasks:
-    ec2_instance:
-      name: "homework13-build"
-      image_id: ami-09cd747c78a9add63
-      instance_type: t2.micro
-      security_group: homework13
-      key_name: HomeWork13Key
-      vpc_subnet_id: subnet-0414e6106afcc7dec
-      network:
-        assign_public_ip: true
-    register: build
+    - ec2_instance:
+        name: "homework13-build"
+        image_id: ami-09cd747c78a9add63
+        instance_type: t2.micro
+        security_group: homework13
+        key_name: HomeWork13Key
+        vpc_subnet_id: subnet-0414e6106afcc7dec
+        network:
+          assign_public_ip: true
+      register: build
 
 - name: create aws "prod" instance
   hosts: localhost
-  user: root
+  become: yes
+
   tasks:
-    ec2_instance:
-      name: "homework13-prod"
-      image_id: ami-09cd747c78a9add63
-      instance_type: t2.micro
-      security_group: homework13
-      key_name: HomeWork13Key
-      vpc_subnet_id: subnet-0414e6106afcc7dec
-      network:
-        assign_public_ip: true
-    register: prod
+    - ec2_instance:
+        name: "homework13-prod"
+        image_id: ami-09cd747c78a9add63
+        instance_type: t2.micro
+        security_group: homework13
+        key_name: HomeWork13Key
+        vpc_subnet_id: subnet-0414e6106afcc7dec
+        network:
+          assign_public_ip: true
+      register: prod
 
 - name: add build instance to build group in ansible
   hosts: localhost
