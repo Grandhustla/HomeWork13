@@ -26,15 +26,14 @@
     - name: create key-pair
       ec2_key:
         name: HomeWork13Key
-        key_material: "{{ lookup('file', '.ssh/id_rsa.pub') }}"
-#      register: key_result
+      register: key_result
 
-#    - name: save keys to this machine
-#      copy:
-#        content: "{{ key_result.key.private_key }}"
-#        dest: "/root/.ssh/id_rsa"
-#        mode: 0600
-#      when: key_result.changed
+    - name: save keys to this machine
+      copy:
+        content: "{{ key_result.key.private_key }}"
+        dest: ".ssh/id_rsa"
+        mode: 0600
+      when: key_result.changed
 
 #- name: create aws "build" instance
 #  hosts: localhost
