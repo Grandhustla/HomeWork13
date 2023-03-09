@@ -38,12 +38,12 @@
         mode: 0600
       when: key_result.changed
 
-- name: create aws "build" instance
-  hosts: localhost
-  become: yes
+#- name: create aws "build" instance
+#  hosts: localhost
+#  become: yes
 #  user: root
 
-  tasks:
+#  tasks:
     - name: create "build" vm
       ec2_instance:
         key_name: homework13key
@@ -65,12 +65,12 @@
         hostname: "{{ build.instances[0].public_ip_address }}"
         groups: build
 
-- name: create aws "prod" instance
-  hosts: localhost
-  become: yes
+#- name: create aws "prod" instance
+#  hosts: localhost
+#  become: yes
 #  user: root
 
-  tasks:
+#  tasks:
     - name: create "prod" vm
       ec2_instance:
         key_name: homework13key
