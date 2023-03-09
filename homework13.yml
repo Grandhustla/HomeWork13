@@ -30,9 +30,9 @@
 
     - name: save keys to this machine
       copy:
-        content: "{{ key-result.key.private_key }}"
-        dest: "~root/.ssh/HomeWork13Key"
-        mode: 0400
+      content: "{{ key-result.key.private_key }}"
+      dest: "~root/.ssh/HomeWork13Key"
+      mode: 0400
       when: key-result.changed
 
 - name: create aws "build" instance
