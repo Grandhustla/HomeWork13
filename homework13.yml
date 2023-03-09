@@ -1,9 +1,9 @@
 ---
 - name: create aws security group, key-pair, save keys
-  hosts: localhost
-  become: yes
-  connection: local
-  user: root
+#  hosts: localhost
+#  become: yes
+#  connection: local
+#  user: root
 
   tasks:
     - name: create security group
@@ -115,7 +115,7 @@
 
 - name: install git & maven on building server
   hosts: build
-  remote_user: ubuntu
+#  remote_user: ubuntu
   become: yes
   become_user: root
 
