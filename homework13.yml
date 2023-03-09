@@ -35,11 +35,11 @@
         mode: 0600
       when: key_result.changed
 
-- name: create aws "build" instance
-  hosts: localhost
+#- name: create aws "build" instance
+#  hosts: localhost
 #  user: root
 
-  tasks:
+#  tasks:
     - name: create "build" vm
       ec2_instance:
         name: "homework13-build"
@@ -57,11 +57,11 @@
         hostname: "{{ build.instances[0].public_ip_address }}"
         groups: build
 
-- name: create aws "prod" instance
-  hosts: localhost
+#- name: create aws "prod" instance
+#  hosts: localhost
 #  user: root
 
-  tasks:
+#  tasks:
     - name: create "prod" vm
       ec2_instance:
         name: "homework13-prod"
@@ -101,9 +101,9 @@
 
 - name: install git & maven on building server
   hosts: build
-#  remote_user: ubuntu
+  remote_user: ubuntu
   become: yes
-#  become_user: root
+  become_user: root
 
   tasks:
   - name: Ensure git package is present
@@ -136,9 +136,9 @@
 
 - name: install default-jdk & tomcat9 on production server
   hosts: build
-#  remote_user: ubuntu
+  remote_user: ubuntu
   become: yes
-#  become_user: root
+  become_user: root
 
   tasks:
   - name: Ensure default-jdk package is present
