@@ -13,9 +13,9 @@
     - name: save keys to this machine
       copy:
         content: "{{ key_result.key.private_key }}"
-        dest: "../.ssh/HomeWork13Key"
+        dest: "/root/.ssh/HomeWork13Key"
         mode: 0600
-      when: key_result.changed
+#      when: key_result.changed
 
     - name: create security group
       ec2_group:
