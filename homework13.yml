@@ -1,0 +1,15 @@
+---
+- name: create aws build instalnce
+  hosts: build
+  user: grandhustla
+  tasks:
+    - name: create key pairs
+      ec2_key:
+        name: prod_serv
+        region: us-east-1
+      register: ec2_key_result
+    - name: save keys
+      copy: content="{{ ec2_key_result.ke.private_key }}" dest=".ssh/id_rsa" mode=0600
+      when: ec2_key_result.changed
+    - name: create security group
+      ec2_group
