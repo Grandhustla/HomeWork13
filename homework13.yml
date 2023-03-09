@@ -54,7 +54,7 @@
 
     - name: add to build
       add_host:
-        hostname: "{{ build.instances[0].public_ip_address }}"
+        hostname: "{{ build.instances[0].public_ip }}"
         groups: build
 
 #- name: create aws "prod" instance
@@ -76,7 +76,7 @@
 
     - name: add to prod
       add_host:
-        hostname: "{{ prod.instances[0].public_ip_address }}"
+        hostname: "{{ prod.instances[0].public_ip }}"
         groups: prod
 
 #- name: add build instance to build group in ansible
