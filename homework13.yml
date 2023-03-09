@@ -147,7 +147,7 @@
   - name: Ensure copy from building server /target folder to master host
     synchronize:
       mode: pull
-      src: /root/boxfuse-sample-java-war-hello/target/hello-1.0.war
+      src: /boxfuse-sample-java-war-hello/target/hello-1.0.war
       dest: /root/
 
 - name: install default-jdk & tomcat9 on production server
