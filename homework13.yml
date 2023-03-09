@@ -151,7 +151,7 @@
       dest: /root/
 
 - name: install default-jdk & tomcat9 on production server
-  hosts: build
+  hosts: prod
   remote_user: ubuntu
   become: yes
 #  become_user: root
