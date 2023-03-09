@@ -1,8 +1,8 @@
 ---
 - name: create aws security group, key-pair, save keys
-#  hosts: localhost
-#  become: yes
-  connection: local
+  hosts: localhost
+  become: yes
+#  connection: local
 
   tasks:
     - name: create security group
@@ -38,7 +38,8 @@
         when: key_result.changed
 
 - name: create aws "build" instance
-#  hosts: localhost
+  hosts: localhost
+  become: yes
 #  user: root
 
   tasks:
@@ -64,7 +65,8 @@
 #        groups: build
 
 - name: create aws "prod" instance
-#  hosts: localhost
+  hosts: localhost
+  become: yes
 #  user: root
 
   tasks:
@@ -90,7 +92,8 @@
 #        groups: prod
 
 - name: add build instance to build group in ansible
-#  hosts: localhost
+  hosts: localhost
+  become: yes
 #  user: root
 #
   tasks:
@@ -100,7 +103,8 @@
         groups: build
 #
 - name: add prod instance to prod group in ansible
-#  hosts: localhost
+  hosts: localhost
+  become: yes
 ##  user: root
 #
   tasks:
