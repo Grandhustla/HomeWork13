@@ -44,7 +44,7 @@
     vpc_subnet_id: subnet-0414e6106afcc7dec
     network:
       assign_public_ip: true
-    register: build
+  register: build
 
 - name: create aws "prod" instance
   ec2_instance:
@@ -56,7 +56,7 @@
     vpc_subnet_id: subnet-0414e6106afcc7dec
     network:
       assign_public_ip: true
-    register: prod
+  register: prod
 
 - name: add build instance to build group in ansible
   add_host:
@@ -72,7 +72,6 @@
 - name: install git & maven on building server
   hosts: build
   become: yes
-#  become_user: root
 
   tasks:
   - name: Ensure git package is present
