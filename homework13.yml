@@ -38,7 +38,7 @@
 
 - name: create aws "build" instance
   hosts: localhost
-  become: yes
+  user: root
 
   tasks:
     - name: create "build" vm
@@ -55,7 +55,7 @@
 
 - name: create aws "prod" instance
   hosts: localhost
-  become: yes
+  user: root
 
   tasks:
     - name: create "prod" vm
@@ -72,7 +72,7 @@
 
 - name: add build instance to build group in ansible
   hosts: localhost
-  become: yes
+  user: root
 
   tasks:
     - name: add to build
@@ -82,7 +82,7 @@
 
 - name: add prod instance to prod group in ansible
   hosts: localhost
-  become: yes
+  user: root
 
   tasks:
     - name: add to prod
