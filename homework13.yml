@@ -73,19 +73,20 @@
   become: yes
 
   tasks:
-    add_host:
-      hostname: "{{ build.instances[0].public_ip_address }}"
-      groups: build
+    - name: add to build
+      add_host:
+        hostname: "{{ build.instances[0].public_ip_address }}"
+        groups: build
 
 - name: add prod instance to prod group in ansible
   hosts: localhost
   become: yes
 
   tasks:
-    add_host:
-      hostname: "{{ prod.instances[0].public_ip_address }}"
-      groups: prod
-
+    - name: add to prod
+      add_host:
+        hostname: "{{ prod.instances[0].public_ip_address }}"
+        groups: prod
 
 - name: install git & maven on building server
   hosts: build
