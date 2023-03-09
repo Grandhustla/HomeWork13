@@ -30,12 +30,8 @@
       register: key_result
 
     - name: save keys to this machine
-      copy:
-        content: {{ key_result.key.private_key }}
-        dest: ".ssh/homework13key.pem"
-        mode: 0600
-        state: present
-#      when: key_result.changed
+      copy: content="{{ key_result.key.private_key }}" dest=".ssh/homework13key.pem" mode=0600
+      when: key_result.changed
 
 #- name: create aws "build" instance
 #  hosts: localhost
