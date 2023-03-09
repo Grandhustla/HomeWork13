@@ -36,16 +36,16 @@
 
 - name: create aws "build" instance
   tasks:
-    ec2_instance:
-      name: "homework13-build"
-      image_id: ami-09cd747c78a9add63
-      instance_type: t2.micro
-      security_group: homework13
-      key_name: HomeWork13Key
-      vpc_subnet_id: subnet-0414e6106afcc7dec
-      network:
-        assign_public_ip: true
-    register: build
+    - ec2_instance:
+        name: "homework13-build"
+        image_id: ami-09cd747c78a9add63
+        instance_type: t2.micro
+        security_group: homework13
+        key_name: HomeWork13Key
+        vpc_subnet_id: subnet-0414e6106afcc7dec
+        network:
+          assign_public_ip: true
+      register: build
 
 - name: create aws "prod" instance
   tasks:
