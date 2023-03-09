@@ -25,13 +25,14 @@
 
     - name: create key-pair
       ec2_key:
-        name: HomeWork13Key
+        name: homework13key
+        region: us-east-1
       register: key_result
 
     - name: save keys to this machine
       copy:
         content: "{{ key_result.key.private_key }}"
-        dest: "/root/.ssh/HomeWork13Key"
+        dest: "/root/.ssh/homework13key"
         mode: 0600
         when: key_result.changed
 
@@ -42,7 +43,7 @@
 #  tasks:
     - name: create "build" vm
       ec2_instance:
-        key_name: HomeWork13Key
+        key_name: homework13key
         name: "homework13-build"
         image_id: ami-09cd747c78a9add63
         instance_type: t2.micro
@@ -68,7 +69,7 @@
 #  tasks:
     - name: create "prod" vm
       ec2_instance:
-        key_name: HomeWork13Key
+        key_name: homework13key
         name: "homework13-prod"
         image_id: ami-09cd747c78a9add63
         instance_type: t2.micro
