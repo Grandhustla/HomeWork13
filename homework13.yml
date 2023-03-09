@@ -1,8 +1,9 @@
 ---
 - name: create aws security group, key-pair, save keys
   hosts: localhost
+  user: root
 #  hosts: 127.0.0.1
-  become: yes
+#  become: yes
 #  connection: local
 #  user: root
 
@@ -22,21 +23,21 @@
           - proto: tcp
             ports:
               - 22
-            cidr_ip: 51.250.14.51/32
+            cidr_ip: 0.0.0.0/0
             rule_desc: allow ssh only for me
 
     - name: create key-pair
       ec2_key:
         name: homework13key
-        region: us-east-1
-      register: key_result
+#        region: us-east-1
+        register: key_result
 
     - name: save keys to this machine
       copy:
         content: "{{ key_result.key.private_key }}"
         dest: "/root/.ssh/id_rsa"
         mode: 0600
-      when: key_result.changed
+        when: key_result.changed
 
 #- name: create aws "build" instance
 #  hosts: localhost
@@ -54,7 +55,7 @@
         vpc_subnet_id: subnet-0414e6106afcc7dec
         network:
           assign_public_ip: true
-      register: build
+        register: build
 
     - name: print debug "build" vm
       debug:
@@ -81,7 +82,7 @@
         vpc_subnet_id: subnet-0414e6106afcc7dec
         network:
           assign_public_ip: true
-      register: prod
+        register: prod
 
     - name: print debug "prod" vm
       debug:
