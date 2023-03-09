@@ -34,7 +34,7 @@
     - name: save keys to this machine
       copy:
         content: "{{ key_result.key.private_key }}"
-        dest: "/root/.ssh/homework13key"
+        dest: "/root/.ssh/id_rsa"
         mode: 0600
       when: key_result.changed
 
