@@ -30,7 +30,7 @@
       ec2_key:
         name: homework13key
 #        region: us-east-1
-        register: key_result
+      register: key_result
 
     - name: save keys to this machine
       copy:
