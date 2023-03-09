@@ -1,7 +1,7 @@
 ---
 - name: create aws security group, key-pair, save keys
   hosts: localhost
-  become: yes
+  user: root
 
   tasks:
     - name: create security group
@@ -33,7 +33,7 @@
       copy:
         content: "{{ keyResult.key.private_key }}"
         dest: "~root/.ssh/HomeWork13Key"
-        mode: 0400
+        mode: 0600
       when: keyResult.changed
 
 - name: create aws "build" instance
