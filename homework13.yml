@@ -1,7 +1,7 @@
 ---
 - name: create aws security group, key-pair, save keys
   hosts: localhost
-  user: root
+#  user: root
 
   tasks:
     - name: create security group
@@ -37,7 +37,7 @@
 
 - name: create aws "build" instance
   hosts: localhost
-  user: root
+#  user: root
 
   tasks:
     - name: create "build" vm
@@ -54,7 +54,7 @@
 
 - name: create aws "prod" instance
   hosts: localhost
-  user: root
+#  user: root
 
   tasks:
     - name: create "prod" vm
@@ -71,7 +71,7 @@
 
 - name: add build instance to build group in ansible
   hosts: localhost
-  user: root
+#  user: root
 
   tasks:
     - name: add to build
@@ -81,7 +81,7 @@
 
 - name: add prod instance to prod group in ansible
   hosts: localhost
-  user: root
+#  user: root
 
   tasks:
     - name: add to prod
@@ -91,9 +91,9 @@
 
 - name: install git & maven on building server
   hosts: build
-  remote_user: ubuntu
+#  remote_user: ubuntu
   become: yes
-  become_user: root
+#  become_user: root
 
   tasks:
   - name: Ensure git package is present
@@ -126,9 +126,9 @@
 
 - name: install default-jdk & tomcat9 on production server
   hosts: build
-  remote_user: ubuntu
+#  remote_user: ubuntu
   become: yes
-  become_user: root
+#  become_user: root
 
   tasks:
   - name: Ensure default-jdk package is present
