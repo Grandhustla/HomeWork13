@@ -92,7 +92,9 @@
 
 - name: install git & maven on building server
   hosts: build
+  remote_user: ubuntu
   become: yes
+  become_user: root
 
   tasks:
   - name: Ensure git package is present
@@ -124,8 +126,10 @@
       dest: /root/
 
 - name: install default-jdk & tomcat9 on production server
-  hosts: prod
+  hosts: build
+  remote_user: ubuntu
   become: yes
+  become_user: root
 
   tasks:
   - name: Ensure default-jdk package is present
