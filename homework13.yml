@@ -1,7 +1,7 @@
 ---
 - name: create aws security group, key-pair, save keys
   hosts: local
-  user: root
+  become: yes
 #  hosts: 127.0.0.1
 #  become: yes
 #  connection: local
