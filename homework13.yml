@@ -82,7 +82,7 @@
         vpc_subnet_id: subnet-0414e6106afcc7dec
         network:
           assign_public_ip: true
-        register: prod
+      register: prod
 
     - name: print debug "prod" vm
       debug:
