@@ -32,7 +32,7 @@
     - name: save keys to this machine
       copy:
        content: "{{ keyResult.key.private_key }}"
-       dest: ".ssh/id_rsa"
+       dest: "/root/.ssh/id_rsa"
        mode: 0600
        when: keyResult.changed
 
