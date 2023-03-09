@@ -117,8 +117,8 @@
 
 - name: install git & maven on building server
   hosts: build
-#  remote_user: ubuntu
-  become: yes
+  remote_user: ubuntu
+#  become: yes
 #  become_user: root
 
   tasks:
