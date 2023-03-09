@@ -26,11 +26,13 @@
     - name: create key-pair
       ec2_key:
         name: HomeWork13Key
-        region: us-east-1
       register: key_result
 
     - name: save keys to this machine
-      copy: content="{{ key_result.key.private_key }}" dest="/root/.ssh/id_rsa" mode=0600
+      copy:
+        content: "{{ key_result.key.private_key }}"
+        dest: "/root/.ssh/id_rsa"
+        mode: 0600
       when: key_result.changed
 
 - name: create aws "build" instance
