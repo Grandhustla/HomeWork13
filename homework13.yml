@@ -17,7 +17,6 @@
               - 80
             cidr_ip: 0.0.0.0/0
             rule_desc: allow http for all
-
           - proto: tcp
             ports:
               - 22
