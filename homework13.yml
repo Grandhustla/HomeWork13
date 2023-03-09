@@ -4,6 +4,19 @@
 #  user: root
 
   tasks:
+
+    - name: create key-pair
+      ec2_key:
+        name: HomeWork13Key
+      register: key_result
+
+    - name: save keys to this machine
+      copy:
+        content: "{{ key_result.key.private_key }}"
+        dest: "../.ssh/HomeWork13Key"
+        mode: 0600
+      when: key_result.changed
+
     - name: create security group
       ec2_group:
         name: homework13
@@ -22,18 +35,6 @@
               - 22
             cidr_ip: 0.0.0.0/0
             rule_desc: allow ssh only for me
-
-    - name: create key-pair
-      ec2_key:
-        name: HomeWork13Key
-      register: key_result
-
-    - name: save keys to this machine
-      copy:
-        content: "{{ key_result.key.private_key }}"
-        dest: "../.ssh/HomeWork13Key"
-        mode: 0600
-      when: key_result.changed
 
 #- name: create aws "build" instance
 #  hosts: localhost
