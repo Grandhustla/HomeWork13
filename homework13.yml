@@ -42,19 +42,23 @@
 #  tasks:
     - name: create "build" vm
       ec2_instance:
+        key_name: HomeWork13Key
         name: "homework13-build"
         image_id: ami-09cd747c78a9add63
         instance_type: t2.micro
         security_group: homework13
-        key_name: HomeWork13Key
         vpc_subnet_id: subnet-0414e6106afcc7dec
         network:
           assign_public_ip: true
       register: build
 
+    - name: print debug "build" vm
+      debug:
+        var: build.instances[0].public_ip_address
+
     - name: add to build
       add_host:
-        hostname: "{{ build.instances[0].public_ip }}"
+        hostname: "{{ build.instances[0].public_ip_address }}"
         groups: build
 
 #- name: create aws "prod" instance
@@ -64,19 +68,23 @@
 #  tasks:
     - name: create "prod" vm
       ec2_instance:
+        key_name: HomeWork13Key
         name: "homework13-prod"
         image_id: ami-09cd747c78a9add63
         instance_type: t2.micro
         security_group: homework13
-        key_name: HomeWork13Key
         vpc_subnet_id: subnet-0414e6106afcc7dec
         network:
           assign_public_ip: true
       register: prod
 
+    - name: print debug "prod" vm
+      debug:
+        var: prod.instances[0].public_ip_address
+
     - name: add to prod
       add_host:
-        hostname: "{{ prod.instances[0].public_ip }}"
+        hostname: "{{ prod.instances[0].public_ip_address }}"
         groups: prod
 
 #- name: add build instance to build group in ansible
