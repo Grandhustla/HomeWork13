@@ -2,8 +2,8 @@
 - name: create aws security group, key-pair, save keys
   hosts: localhost
   become: yes
-#  connection: local
-#  user: root
+  connection: local
+  user: root
 
   tasks:
     - name: create security group
