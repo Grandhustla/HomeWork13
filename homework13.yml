@@ -142,7 +142,7 @@
   - name: Ensure to folder /boxfuse-sample-java-war-hello/ and build java project
     command: mvn --batch-mode --quiet install
     args:
-      chdir: boxfuse-sample-java-war-hello/
+      chdir: /boxfuse-sample-java-war-hello
 
   - name: Ensure copy from building server /target folder to master host
     synchronize:
