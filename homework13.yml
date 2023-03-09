@@ -21,7 +21,7 @@
             ports:
               - 22
             cidr_ip: 51.250.77.184/32
-            role_desc: allow ssh only for me
+            rule_desc: allow ssh only for me
 
     - name: create key-pair
       ec2_key:
