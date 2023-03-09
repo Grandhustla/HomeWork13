@@ -1,15 +1,164 @@
 ---
-- name: create aws build instalnce
-  hosts: build
-  user: grandhustla
+- name: create aws security group, key-pair, save keys
+  hosts: localhost
   tasks:
-    - name: create key pairs
-      ec2_key:
-        name: prod_serv
-        region: us-east-1
-      register: ec2_key_result
-    - name: save keys
-      copy: content="{{ ec2_key_result.ke.private_key }}" dest=".ssh/id_rsa" mode=0600
-      when: ec2_key_result.changed
     - name: create security group
-      ec2_group
+      ec2_group:
+        name: homework13
+        description: open 22, 80 ports
+        vpc_id: vpc-06522b293159a2cd7
+        region: us-east-1
+        rules:
+          - proto: tcp
+            ports:
+              - 80
+            cidr_ip: 0.0.0.0/0
+            rule_desc: allow http for all
+
+          - proto: tcp
+            ports:
+              - 22
+            cidr_ip: 51.250.77.184/32
+            role_desc: allow ssh only for me
+
+    - name: create key-pair
+      ec2_key:
+        name: HomeWork13Key
+        region: us-east-1
+      register: key-result
+
+    - name: save keys to this machine
+      copy:
+        content: "{{ key-result.key.private_key }}"
+        dest: "~root/.ssh/HomeWork13Key"
+        mode: 0400
+      when: key-result.changed
+
+- name: create aws "build" instance
+  ec2_instance:
+    name: "homework13-build"
+    image_id: ami-09cd747c78a9add63
+    instance_type: t2.micro
+    security_group: homework13
+    key_name: HomeWork13Key
+    vpc_subnet_id: subnet-0414e6106afcc7dec
+    network:
+      assign_public_ip: true
+    register: build
+
+- name: create aws "prod" instance
+  ec2_instance:
+    name: "homework13-prod"
+    image_id: ami-09cd747c78a9add63
+    instance_type: t2.micro
+    security_group: homework13
+    key_name: HomeWork13Key
+    vpc_subnet_id: subnet-0414e6106afcc7dec
+    network:
+      assign_public_ip: true
+    register: prod
+
+- name: add build instance to build group in ansible
+  add_host:
+    hostname: "{{ build.instances[0].public_ip_address }}"
+    groups: build
+
+- name: add prod instance to prod group in ansible
+  add_host:
+    hostname: "{{ prod.instances[0].public_ip_address }}"
+    groups: prod
+
+
+- name: install git & maven on building server
+  hosts: build
+  become: yes
+#  become_user: root
+
+  tasks:
+  - name: Ensure git package is present
+    apt:
+      name: git
+      state: present
+      update_cache: yes
+
+  - name: Ensure maven package is present
+    apt:
+      name: maven
+      state: present
+
+  - name: Ensure clone git repository boxfuse
+    git:
+      repo: https://github.com/boxfuse/boxfuse-sample-java-war-hello
+      dest: /boxfuse-sample-java-war-hello/
+      clone: yes
+
+  - name: Ensure to folder /boxfuse-sample-java-war-hello/ and build java project
+    command: mvn --batch-mode --quiet install
+    args:
+      chdir: /boxfuse-sample-java-war-hello/
+
+  - name: Ensure copy from building server /target folder to master host
+    synchronize:
+      mode: pull
+      src: /root/boxfuse-sample-java-war-hello/target/hello-1.0.war
+      dest: /root/
+
+- name: install default-jdk & tomcat9 on production server
+  hosts: prod
+  become: yes
+
+  tasks:
+  - name: Ensure default-jdk package is present
+    apt:
+      name: default-jdk
+      state: present
+      update_cache: yes
+
+  - name: Ensure tomcat9 package is present
+    apt:
+      name: tomcat9
+      state: present
+
+  - name: Ensure copy from master to /root/ folder to production /var/lib/tomcat9/webapps/
+    synchronize:
+      src: /root/hello-1.0.war
+      dest: /var/lib/tomcat9/webapps/
+
+
+
+
+#  hosts: localhost
+#  user: grandhustla
+#  tasks:
+#    - name: create security group
+#      ec2_group:
+#        name: tomcat_prod
+#        description: open 22 port
+#        vpc_id
+#    - name: create key pairs
+#      ec2_key:
+#        name: prod_serv
+#        region: us-east-1
+#      register: ec2_key_result
+#    - name: save "key" to root/.ssh/ folder
+#      copy: content="{{ ec2_key_result.ke.private_key }}" dest=".ssh/id_rsa" mode=0600
+#      when: ec2_key_result.changed
+#    -
+#
+#- name: create aws "prod" instance
+#  ec2_instance:
+#    name
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
