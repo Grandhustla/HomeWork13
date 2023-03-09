@@ -30,7 +30,7 @@
       register: keyResult
 
     - name: save keys to this machine
-       copy:
+      copy:
        content: "{{ keyResult.key.private_key }}"
        dest: ".ssh/id_rsa"
        mode: 0600
