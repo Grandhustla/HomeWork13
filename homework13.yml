@@ -26,7 +26,7 @@
     - name: create key-pair
       ec2_key:
         name: HomeWork13Key
-        key_material: "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"
+        key_material: "{{ lookup('file', '.ssh/id_rsa.pub') }}"
 #      register: key_result
 
 #    - name: save keys to this machine
