@@ -118,7 +118,7 @@
   hosts: build
 #  remote_user: ubuntu
   become: yes
-  become_user: root
+#  become_user: root
 
   tasks:
   - name: Ensure git package is present
