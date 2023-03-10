@@ -1,11 +1,6 @@
 ---
 - name: create aws security group, key-pair, save keys
   hosts: localhost
-#  become: yes
-#  hosts: 127.0.0.1
-#  become: yes
-#  connection: local
-#  user: root
 
   tasks:
     - name: create security group
@@ -34,7 +29,6 @@
     - name: create key-pair
       ec2_key:
         name: homework13key
-#        region: us-east-1
       register: key_result
 
     - name: save keys to this machine
@@ -44,13 +38,7 @@
         mode: 0600
       when: key_result.changed
 
-#- name: create aws "build" instance
-#  hosts: localhost
-#  become: yes
-#  user: root
-
-#  tasks:
-    - name: create "build" vm
+    - name: create aws "build" instance
       ec2_instance:
         key_name: homework13key
         name: "homework13-build"
@@ -71,13 +59,7 @@
         hostname: "{{ build.instances[0].public_ip_address }}"
         groups: build
 
-#- name: create aws "prod" instance
-#  hosts: localhost
-#  become: yes
-#  user: root
-
-#  tasks:
-    - name: create "prod" vm
+    - name: create aws "prod" instance
       ec2_instance:
         key_name: homework13key
         name: "homework13-prod"
@@ -98,33 +80,10 @@
         hostname: "{{ prod.instances[0].public_ip_address }}"
         groups: prod
 
-#- name: add build instance to build group in ansible
-#  hosts: localhost
-#  become: yes
-##  user: root
-##
-#  tasks:
-#    - name: add to build
-#      add_host:
-#        hostname: "{{ build.instances[0].public_ip_address }}"
-#        groups: build
-##
-#- name: add prod instance to prod group in ansible
-#  hosts: localhost
-#  become: yes
-###  user: root
-##
-#  tasks:
-#    - name: add to prod
-#      add_host:
-#        hostname: "{{ prod.instances[0].public_ip_address }}"
-#        groups: prod
-
 - name: install git & maven on building server
   hosts: build
   remote_user: ubuntu
   become: yes
-#  become_user: root
 
   tasks:
   - name: Ensure git package is present
@@ -159,7 +118,6 @@
   hosts: prod
   remote_user: ubuntu
   become: yes
-#  become_user: root
 
   tasks:
   - name: Ensure default-jdk package is present
@@ -177,42 +135,3 @@
     synchronize:
       src: /root/hello-1.0.war
       dest: /var/lib/tomcat9/webapps/
-
-
-
-
-#  hosts: localhost
-#  user: grandhustla
-#  tasks:
-#    - name: create security group
-#      ec2_group:
-#        name: tomcat_prod
-#        description: open 22 port
-#        vpc_id
-#    - name: create key pairs
-#      ec2_key:
-#        name: prod_serv
-#        region: us-east-1
-#      register: ec2_key_result
-#    - name: save "key" to root/.ssh/ folder
-#      copy: content="{{ ec2_key_result.ke.private_key }}" dest=".ssh/id_rsa" mode=0600
-#      when: ec2_key_result.changed
-#    -
-#
-#- name: create aws "prod" instance
-#  ec2_instance:
-#    name
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
